@@ -32,8 +32,28 @@ services:
     restart: always
     depends_on:
       - mysql
+      - artemis
     ports:
       - "9010:8080"
+    environment:
+      SPRING_ARTEMIS_BROKER_URL: tcp://artemis:61616
+      SPRING_ARTEMIS_USER: admin
+      SPRING_ARTEMIS_PASSWORD: admin
+
+  artemis:
+    image: apache/activemq-artemis:latest-alpine
+    container_name: artemis
+    restart: always
+    ports:
+      - "61616:61616"
+      - "8161:8161"
+    environment:
+      ARTEMIS_USERNAME: admin
+      ARTEMIS_PASSWORD: admin
+      DISABLE_SECURITY: 'true'
+    volumes:
+      - artemis_data:/var/lib/artemis/data
 
 volumes:
   mysql_data:
+  artemis_data:

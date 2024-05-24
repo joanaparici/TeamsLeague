@@ -10,15 +10,10 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Team {
+public class Sponsor {
     private Integer id;
     private String nombre;
-    private String ubicacion;
-    private String entrenador;
-    private String capitan;
-    private String categoria;
+    private String industria;
     @ToString.Exclude
-    private List<Player> players;
-    @ToString.Exclude
-    private List<Sponsor> sponsors;
+    private List<Team> teams;
 }

@@ -1,5 +1,9 @@
 package com.teamsleague.contract.controller;
 
+import com.teamsleague.contract.mapper.PlayerMapperController;
+import com.teamsleague.contract.mapper.SponsorMapperController;
+import com.teamsleague.model.domain.entity.Player;
+import com.teamsleague.model.domain.entity.Sponsor;
 import com.teamsleague.model.domain.entity.Team;
 import com.teamsleague.model.domain.service.TeamService;
 import com.teamsleague.contract.mapper.TeamMapperController;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(TeamController.TEAMS)
@@ -23,10 +28,14 @@ public class TeamController {
 
     private final TeamService teamService;
     private final TeamMapperController teamMapperController;
+    private final PlayerMapperController playerMapperController;
+    private final SponsorMapperController sponsorMapperController;
 
-    public TeamController(TeamService teamService, TeamMapperController teamMapperController) {
+    public TeamController(TeamService teamService, TeamMapperController teamMapperController, PlayerMapperController playerMapperController, SponsorMapperController sponsorMapperController, PlayerMapperController playerMapperController1, SponsorMapperController sponsorMapperController1) {
         this.teamService = teamService;
         this.teamMapperController = teamMapperController;
+        this.playerMapperController = playerMapperController1;
+        this.sponsorMapperController = sponsorMapperController1;
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -55,11 +64,16 @@ public class TeamController {
     @PostMapping("")
     public Response addTeam(@RequestBody TeamCreateDTO teamCreateWeb) {
         Team team = teamMapperController.TeamCreateDTOtoTeam(teamCreateWeb);
-        teamService.addTeam(team);
-        TeamDetailDTO teamWeb = teamMapperController.toTeamDetailDTO(team);
+
+        List<Player> playerList = teamCreateWeb.getPlayerList().stream()
+                .map(playerMapperController::playerCreateDTOtoPlayer)
+                .toList();
+
+       Team addedTeam = teamService.addTeam(team, playerList, teamCreateWeb.getSponsorIdList());
+        TeamDetailDTO teamWeb = teamMapperController.toTeamDetailDTO(addedTeam);
+
         return Response.builder()
                 .data(teamWeb)
-                .data(teamCreateWeb)
                 .build();
     }
 
@@ -67,13 +81,20 @@ public class TeamController {
     @PutMapping("/{id}")
     public Response updateTeam(@PathVariable("id") int id, @RequestBody TeamUpdateDTO teamUpdateWeb) {
         Team team = teamMapperController.TeamUpdateDTOtoTeam(teamUpdateWeb);
-        teamService.updateTeam(id, team);
-        TeamDetailDTO teamWeb = teamMapperController.toTeamDetailDTO(team);
+
+        List<Player> playerList = teamUpdateWeb.getNewPlayersList().stream()
+                .map(playerMapperController::playerUpdateDTOtoPlayer)
+                .toList();
+
+        Team updatedTeam = teamService.updateTeam(id, team, playerList, teamUpdateWeb.getSponsorIdList());
+
+        TeamDetailDTO teamWeb = teamMapperController.toTeamDetailDTO(updatedTeam);
+
         return Response.builder()
                 .data(teamWeb)
-                .data(teamUpdateWeb)
                 .build();
     }
+
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{id}")

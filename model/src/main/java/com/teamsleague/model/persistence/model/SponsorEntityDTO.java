@@ -7,26 +7,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.List;
+
 @Entity
-@Table(name = "jugadores")
+@Table(name = "patrocinadores")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "team"})
-public class PlayerEntityDTO {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "teams"})
+public class SponsorEntityDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String nombre;
-    private String apellido;
-    private Integer edad;
-    private String genero;
-    private String posicion;
+    private String industria;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "equipo_id")
+    @ManyToMany(mappedBy = "sponsors", fetch = FetchType.LAZY)
     @ToString.Exclude
-    private TeamEntityDTO team;
+    private List<TeamEntityDTO> teams;
 }

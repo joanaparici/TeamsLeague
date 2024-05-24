@@ -1,8 +1,13 @@
 package com.teamsleague.contract.model.team;
 
+import com.teamsleague.contract.model.player.PlayerCreateDTO;
+import com.teamsleague.contract.model.player.PlayerListDTO;
+import com.teamsleague.contract.model.sponsor.SponsorListDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -13,4 +18,6 @@ public class TeamCreateDTO {
     private String entrenador;
     private String capitan;
     private String categoria;
+    private List<PlayerCreateDTO> playerList;
+    private List<Integer> sponsorIdList;
 }
