@@ -5,20 +5,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.List;
-
 @Getter
 @Setter
 @NoArgsConstructor
-public class Team {
+public class Player {
     private Integer id;
     private String nombre;
-    private String ubicacion;
-    private String entrenador;
-    private String capitan;
-    private String categoria;
+    private String apellido;
+    private Integer edad;
+    private String genero;
+    private String posicion;
     @ToString.Exclude
-    private List<Player> players;
-    @ToString.Exclude
-    private List<Sponsor> sponsors;
+    private Team team;
 }

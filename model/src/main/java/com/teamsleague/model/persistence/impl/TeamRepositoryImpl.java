@@ -17,6 +17,8 @@ import java.util.Optional;
 @Repository
 public class TeamRepositoryImpl implements TeamRepository {
 
+    @Autowired
+    private TeamMapper mapper;
 
     @Autowired
     private TeamDAO teamDAO;
@@ -25,28 +27,28 @@ public class TeamRepositoryImpl implements TeamRepository {
     public List<Team> getAll() {
         List<TeamEntityDTO> teamEntities;
         teamEntities = teamDAO.findAll();
-        return TeamMapper.mapper.toTeamList(teamEntities);
+        return mapper.toTeamList(teamEntities);
     }
 
     @Override
     public Optional<Team> findById(int id) {
-        return Optional.ofNullable(TeamMapper.mapper.toTeam(teamDAO.findById(id).orElse(null)));
+        return Optional.ofNullable(mapper.toTeam(teamDAO.findById(id)));
     }
 
     @Override
     @Transactional
-    public Team addTeam(Team Team) {
-        TeamEntityDTO teamEntityDTO = TeamMapper.mapper.toTeamEntityDTO(Team);
+    public Team addTeam(Team team) {
+        TeamEntityDTO teamEntityDTO = mapper.toTeamEntityDTO(team);
         teamDAO.save(teamEntityDTO);
-        return TeamMapper.mapper.toTeam(teamEntityDTO);
+        return mapper.toTeam(teamEntityDTO);
     }
 
     @Override
-    public Team updateTeam(int id, Team Team) {
-        TeamEntityDTO teamEntity = TeamMapper.mapper.toTeamEntityDTO(Team);
+    public Team updateTeam(int id, Team team) {
+        TeamEntityDTO teamEntity = mapper.toTeamEntityDTO(team);
         teamEntity.setId(id);
         teamDAO.save(teamEntity);
-        return TeamMapper.mapper.toTeam(teamEntity);
+        return mapper.toTeam(teamEntity);
     }
 
     @Override

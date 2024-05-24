@@ -1,5 +1,6 @@
 package com.teamsleague.model.domain.service;
 
+import com.teamsleague.model.domain.entity.Player;
 import com.teamsleague.model.domain.entity.Team;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +13,9 @@ public interface TeamService {
 
     Optional<Team> findById(int id);
 
-    Team addTeam(Team Team);
+    Team addTeam(Team Team, List<Player> playerList, List<Integer> sponsorIdList);
 
-    Team updateTeam(int id, Team Team);
+    Team updateTeam(int id, Team team, List<Player> playerList, List<Integer> sponsorIdList);
 
     void deleteTeam(int id);
 }

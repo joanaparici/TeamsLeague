@@ -1,4 +1,4 @@
-package com.teamsleague.contract.model.team;
+package com.teamsleague.contract.model.sponsor;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,7 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class TeamListDTO {
+public class SponsorListDTO {
     private Integer id;
     private String nombre;
+    private String industria;
 }
