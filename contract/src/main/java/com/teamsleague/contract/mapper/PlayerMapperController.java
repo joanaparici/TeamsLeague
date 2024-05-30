@@ -5,7 +5,6 @@ import com.teamsleague.contract.model.player.PlayerListDTO;
 import com.teamsleague.contract.model.player.PlayerUpdateDTO;
 import com.teamsleague.model.domain.entity.Player;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import java.util.List;
 

@@ -6,7 +6,6 @@ import com.teamsleague.contract.model.team.TeamDetailDTO;
 import com.teamsleague.contract.model.team.TeamListDTO;
 import com.teamsleague.contract.model.team.TeamUpdateDTO;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring", uses = {PlayerMapperController.class, SponsorMapperController.class})
 public interface TeamMapperController {

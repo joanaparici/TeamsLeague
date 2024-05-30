@@ -26,6 +26,7 @@
         <module>contract</module>
         <module>main</module>
         <module>model</module>
+        <module>JMS</module>
     </modules>
     <dependencies>
         <dependency>
