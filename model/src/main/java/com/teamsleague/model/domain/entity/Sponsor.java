@@ -14,6 +14,8 @@ public class Sponsor {
     private Integer id;
     private String nombre;
     private String industria;
+    private Integer version;
+    private Boolean deleted;
     @ToString.Exclude
     private List<Team> teams;
 }

@@ -29,28 +29,22 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: joan_java
-    restart: always
     depends_on:
       - mysql
       - artemis
     ports:
-      - "9010:8080"
+      - "8081:8081"
     environment:
       SPRING_ARTEMIS_BROKER_URL: tcp://artemis:61616
-      SPRING_ARTEMIS_USER: admin
-      SPRING_ARTEMIS_PASSWORD: admin
+      SPRING_ARTEMIS_USER: artemis
+      SPRING_ARTEMIS_PASSWORD: artemis
 
   artemis:
     image: apache/activemq-artemis:latest-alpine
     container_name: artemis
-    restart: always
     ports:
       - "61616:61616"
       - "8161:8161"
-    environment:
-      ARTEMIS_USERNAME: admin
-      ARTEMIS_PASSWORD: admin
-      DISABLE_SECURITY: 'true'
     volumes:
       - artemis_data:/var/lib/artemis/data
 

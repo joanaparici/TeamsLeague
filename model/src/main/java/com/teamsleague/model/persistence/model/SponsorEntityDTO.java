@@ -24,6 +24,11 @@ public class SponsorEntityDTO {
     private String nombre;
     private String industria;
 
+    @Version
+    private Integer version = 0;
+
+    private Boolean deleted = false;
+
     @ManyToMany(mappedBy = "sponsors", fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<TeamEntityDTO> teams;
